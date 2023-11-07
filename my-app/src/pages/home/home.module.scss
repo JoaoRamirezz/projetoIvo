@@ -7,9 +7,15 @@
 .home {
   background-color: #334d63;
   color: rgb(212, 184, 184);
+  padding-left: 5%;
+  padding-top: 5%;
   display: flex;
+  justify-content: space-around;
+  padding-right: 40%;
 }
 
 .numberlist{
   margin-left: 2vw;
+  background-color: white;
+  color: black;
 }
