@@ -11,18 +11,42 @@ function Home() {
   const [indexes, setIndexes] = useState([]);
   const [quantity, setQuantity] = useState();
   const [selectedNum, setSelected] = useState();
-  const [numsList, setNums] = useState([]);
   const [percent, setPercent] = useState();
+  const [indexesList, setList] = useState();
 
-  function getIndexes() {
+
+  function SearchIndex(num){
+    setIndexes(prev => prev.map((n) => {
+      if (n.linha === num) {
+        n.number = Math.floor(Math.random() * 10);
+        n.repeat += 1
+        n.pct = 0.01
+      }
+      else {
+        n.number = Math.floor(Math.random() * 10);
+        n.pct += (n.pct * percent)
+      }
+      return n
+    }).sort(function(a,b){
+      return b.repeat - a.repeat
+    }))
+  }
+
+
+  function GetIndexes() {
+    var a = 0
+
+
     return (!indexes) ? null : (
       <tbody>
         {indexes.map((item) => {
+          a += 1
           return (
             <tr>
-              <td>{item.index}</td>
-              <td>{item.number}</td>
+              <td>{a}</td>
+              <td>{item.linha}</td>
               <td>{item.repeat}</td>
+              <td>{item.number}</td>
               <td>{item.pct}%</td>
             </tr>
           );
@@ -33,41 +57,48 @@ function Home() {
 
   function SelectNumber(num) {
     var splittedNums = num.split(",")
-    var nums = []
-
+    var index = 0
+    
     splittedNums.forEach(nm => {
       setIndexes(prev => prev.map((n) => {
+        index +=1
         if (n.number === Number(nm)) {
-          n.repeat += 1
-          n.pct *= n.pct
-          nums.push(nm)
+          SearchIndex(index)
         }
-        else{
+        else {
           n.number = Math.floor(Math.random() * 10);
-          n.repeat = 0
-          n.pct = percent
+          n.pct += (n.pct * percent)
         }
-        setNums(nums)
         return n
       }))
     });
+    
+    
   }
 
   function ListRender(qtt) {
-    var n = []
-
+    let n = []
     for (let i = 0; i < qtt; i++) {
       const number = Math.floor(Math.random() * 10);
       const obj = {
         "index": i + 1,
+        "linha": i + 1,
         "number": number,
         "repeat": 0,
-        "pct": percent
+        "pct": 0.01
       }
-
       n.push(obj)
     }
+
+    const listObj ={
+      "number": indexesList.lenght + 1,
+      "list":n
+    }
+
     setIndexes(n)
+    setList(listObj)
+    
+    console.log()
   }
 
   return (
@@ -91,7 +122,7 @@ function Home() {
 
         <div className={style.numbers}>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Control type="text" placeholder="Escreva a Porcentagem: " onChange={e => setPercent((e.target.value)/100)} />
+            <Form.Control type="text" placeholder="Escreva a Porcentagem: " onChange={e => setPercent((e.target.value) / 100)} />
           </Form.Group>
         </div>
 
@@ -99,12 +130,13 @@ function Home() {
       <div className={style.numberslist}>
         <table border="1">
           <tr>
-            <th>Index</th>
-            <th>Numero</th>
+            <th>Posição</th>
+            <th>Linha</th>
             <th>Repetido</th>
+            <th>Numero</th>
             <th>Porcentagem</th>
           </tr>
-          {getIndexes()}
+          {GetIndexes()}
         </table>
       </div>
 
