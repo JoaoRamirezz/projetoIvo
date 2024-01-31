@@ -12,6 +12,8 @@ function Home() {
   const [quantity, setQuantity] = useState();
   const [selectedNum, setSelected] = useState();
   const [percent, setPercent] = useState();
+  const [numbersList, setNumbers] = useState();
+
 
 
   function SortNumbers(num) {
@@ -48,7 +50,7 @@ function Home() {
 
   function SelectNumber(num) {
     var splittedNums = num.split(",")
-
+    
     splittedNums.forEach(nm => {
       setIndexes(prev => prev.map((n) => {
         if (n.number === Number(nm)) {
@@ -59,6 +61,7 @@ function Home() {
         else {
           n.pct += (n.pct * percent)
           n.nonrepeat += 1
+          n.number = numbersList[Math.floor(Math.random() * numbersList.length)];
         }
         return n
       }))
@@ -68,8 +71,11 @@ function Home() {
 
   function ListRender(qtt) {
     let n = []
+    let l = [];
+
     for (let i = 0; i < qtt; i++) {
       const number = Math.floor(Math.random() * 25) + 1;
+      l.push(number);
       const obj = {
         "index": i + 1,
         "linha": i + 1,
@@ -79,8 +85,10 @@ function Home() {
         "pct": 0.01
       }
       n.push(obj)
+
     }
 
+    setNumbers(l)
     setIndexes(n)
   }
 
