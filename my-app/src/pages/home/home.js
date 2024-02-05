@@ -15,6 +15,19 @@ function Home() {
   const [numbersList, setNumbers] = useState();
 
 
+  function generateNumber(){
+    var actualNumbers = []
+    var nm
+    while(true){
+      nm = numbersList[Math.floor(Math.random() * numbersList.length)];
+      if(actualNumbers.includes(nm) == false){
+        actualNumbers.push(nm)
+        break;
+      }
+    }
+    return nm;
+  }
+
 
   function SortNumbers(num) {
     setIndexes(prev => prev.map((n) => {
@@ -51,9 +64,11 @@ function Home() {
   function SelectNumber(num) {
     var splittedNums = num.split(",")
     
+
     splittedNums.forEach(nm => {
       setIndexes(prev => prev.map((n) => {
         if (n.number === Number(nm)) {
+            n.number = generateNumber()
             n.repeat += 1
             n.pct = 0.01
             n.nonrepeat = 0
@@ -61,7 +76,7 @@ function Home() {
         else {
           n.pct += (n.pct * percent)
           n.nonrepeat += 1
-          n.number = numbersList[Math.floor(Math.random() * numbersList.length)];
+          n.number = generateNumber()
         }
         return n
       }))
