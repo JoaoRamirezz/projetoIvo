@@ -3,6 +3,7 @@ import { Button, Form } from 'react-bootstrap';
 import style from './home.module.scss'
 import SideMenu from '../../components/SideMenu';
 import { useState } from 'react';
+import { Next } from 'react-bootstrap/esm/PageItem';
 
 
 
@@ -13,11 +14,14 @@ function Home() {
   const [selectedNum, setSelected] = useState();
   const [percent, setPercent] = useState();
   const [numbersList, setNumbers] = useState();
+  var actualNumbers = []
+  var nm
 
-
-  function generateNumber(){
-    var actualNumbers = []
-    var nm
+  function GenerateNumber(){
+    if (actualNumbers.length == 5){
+      actualNumbers = []
+    }
+    
     while(true){
       nm = numbersList[Math.floor(Math.random() * numbersList.length)];
       if(actualNumbers.includes(nm) == false){
@@ -63,20 +67,19 @@ function Home() {
 
   function SelectNumber(num) {
     var splittedNums = num.split(",")
-    
 
     splittedNums.forEach(nm => {
       setIndexes(prev => prev.map((n) => {
         if (n.number === Number(nm)) {
-            n.number = generateNumber()
-            n.repeat += 1
-            n.pct = 0.01
-            n.nonrepeat = 0
+          n.number = GenerateNumber()
+          n.repeat += 1
+          n.pct = 0.01
+          n.nonrepeat = 0
         }
         else {
+          n.number = GenerateNumber()
           n.pct += (n.pct * percent)
           n.nonrepeat += 1
-          n.number = generateNumber()
         }
         return n
       }))
@@ -90,16 +93,23 @@ function Home() {
 
     for (let i = 0; i < qtt; i++) {
       const number = Math.floor(Math.random() * 25) + 1;
-      l.push(number);
-      const obj = {
-        "index": i + 1,
-        "linha": i + 1,
-        "number": number,
-        "repeat": 0,
-        "nonrepeat": 0,
-        "pct": 0.01
+      if(l.includes(number) == false){
+        l.push(number);
+        const obj = {
+          "index": i + 1,
+          "linha": i + 1,
+          "number": number,
+          "repeat": 0,
+          "nonrepeat": 0,
+          "pct": 0.01
+        }
+        n.push(obj)
       }
-      n.push(obj)
+      else{
+        i -= 1
+      }
+
+
 
     }
 
