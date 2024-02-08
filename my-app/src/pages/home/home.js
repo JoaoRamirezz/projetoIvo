@@ -92,7 +92,7 @@ function Home() {
     let l = [];
 
     for (let i = 0; i < qtt; i++) {
-      const number = Math.floor(Math.random() * 25) + 1;
+      const number = Math.floor(Math.random() * 100) + 1;
       if(l.includes(number) == false){
         l.push(number);
         const obj = {
@@ -144,7 +144,7 @@ function Home() {
         </div>
 
       </div>
-      <div className={style.numberslist}>
+      <div className="Table">
         <table border="1">
           <tr>
             <th>Posição</th>

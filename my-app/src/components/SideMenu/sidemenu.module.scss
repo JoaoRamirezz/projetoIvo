@@ -13,14 +13,24 @@
 }
 
 .usericon {
+    position: relative;
     margin-left: 5%;
     background-color: #fff;
     width: 100px;
     height: 100px;
-    border-radius: 50%; /* Torna o elemento redondo */
+    border-radius: 50%; 
     display: flex;
-    justify-content: center; /* Centraliza o ícone verticalmente */
-    align-items: center; /* Centraliza o ícone horizontalmente */
+    justify-content: center; 
+    align-items: center; 
     margin-bottom: 20px;
-    color: #333; /* Cor de fundo do ícone de usuário */
+    color: #333;
+    font-weight: bold;
+    font-size: 24px;
+}
+  
+.usericonLabel {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
